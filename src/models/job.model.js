@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const jobSchema = new Schema({
   date: { type: Date, required: true },
-  doctorId: { type: String, required: true },
+  doctorId: { type: Schema.Types.ObjectId, required: true, ref: "Doctor" },
   doctorName: { type: String, required: true },
   jobNumber: { type: Number, required: true },
   patientName: { type: String, required: true },
