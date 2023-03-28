@@ -22,6 +22,7 @@ const getJobs = async (req, res) => {
       till_date,
       _limit = 10,
       _page = 1,
+      no_limit,
     } = req.query;
 
     const skip = _page > 0 ? (_page - 1) * _limit : 0;
@@ -39,14 +40,20 @@ const getJobs = async (req, res) => {
       filters.date = { $gte: fromDate, $lte: tillDate };
     }
 
-    const response = await JobModel.find(filters)
-      .sort({ date: -1 })
-      .skip(skip)
-      .limit(_limit);
+    let response = {};
 
-    const count = await countDocuments(JobModel);
+    if (no_limit == "true") {
+      response = await JobModel.find({ filters }).sort({ date: 1 });
+    } else {
+      response = await JobModel.find(filters)
+        .sort({ date: -1 })
+        .skip(skip)
+        .limit(_limit);
 
-    res.set("X-Total-Count", count);
+      const count = await countDocuments(JobModel);
+
+      res.set("X-Total-Count", count);
+    }
 
     return res.json({ response, status: true });
   } catch (error) {
