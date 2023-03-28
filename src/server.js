@@ -5,6 +5,7 @@ const cors = require("cors");
 const billRouter = require("./routes/bill.route");
 const doctorRouter = require("./routes/doctor.route");
 const workRouter = require("./routes/work.route");
+const jobRouter = require("./routes/job.route");
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.get("/", (req, res) => {
 app.use("/api/v1/work", workRouter);
 app.use("/api/v1/doctor", doctorRouter);
 app.use("/api/v1/bill", billRouter);
+app.use("/api/v1/job", jobRouter);
 
 module.exports = app;
