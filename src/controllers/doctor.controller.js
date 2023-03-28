@@ -64,4 +64,24 @@ const deleteDoctorById = async (req, res) => {
   }
 };
 
-module.exports = { addDoctor, getDoctors, getDoctorById, deleteDoctorById };
+const updateDoctorById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedDoctor = req.body;
+
+    const response = await DoctorModel.findByIdAndUpdate(id, updatedDoctor);
+
+    return res.json({ response, status: true });
+  } catch (error) {
+    res.status(500);
+    return res.json({ error: error.message, status: false });
+  }
+};
+
+module.exports = {
+  addDoctor,
+  getDoctors,
+  getDoctorById,
+  deleteDoctorById,
+  updateDoctorById,
+};
