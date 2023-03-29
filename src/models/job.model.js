@@ -6,6 +6,8 @@ const jobSchema = new Schema({
   doctorName: { type: String, required: true },
   jobNumber: { type: Number, required: true },
   patientName: { type: String, required: true },
+  shade: String,
+  notes: String,
   price: { type: Number, required: true },
   works: [
     {
