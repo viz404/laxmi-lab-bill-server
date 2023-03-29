@@ -23,6 +23,7 @@ const getJobs = async (req, res) => {
       _limit = 10,
       _page = 1,
       no_limit,
+      job_number,
     } = req.query;
 
     const skip = _page > 0 ? (_page - 1) * _limit : 0;
@@ -38,6 +39,10 @@ const getJobs = async (req, res) => {
       let tillDate = new Date(till_date);
 
       filters.date = { $gte: fromDate, $lte: tillDate };
+    }
+
+    if (job_number) {
+      filters.jobNumber = job_number;
     }
 
     let response = {};
@@ -102,4 +107,10 @@ const deleteJobById = async (req, res) => {
   }
 };
 
-module.exports = { addJob, getJobs, getJobById, updateJobById, deleteJobById };
+module.exports = {
+  addJob,
+  getJobs,
+  getJobById,
+  updateJobById,
+  deleteJobById,
+};
