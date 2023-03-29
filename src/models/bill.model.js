@@ -11,7 +11,7 @@ const billSchema = new Schema({
   jobs: [
     {
       date: { type: Date, required: true },
-      jobNo: { type: Number, required: true },
+      jobNumber: { type: Number, required: true },
       patientName: { type: String, required: true },
       price: { type: Number, required: true },
       works: [
