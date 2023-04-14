@@ -48,10 +48,10 @@ const getJobs = async (req, res) => {
     let response = {};
 
     if (no_limit == "true") {
-      response = await JobModel.find({ filters }).sort({ date: 1 });
+      response = await JobModel.find({ filters }).sort({ jobNumber: -1 });
     } else {
       response = await JobModel.find(filters)
-        .sort({ date: -1 })
+        .sort({ jobNumber: -1 })
         .skip(skip)
         .limit(_limit);
 
