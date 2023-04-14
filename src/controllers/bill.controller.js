@@ -38,7 +38,10 @@ const getBills = async (req, res) => {
       filters.createdAt = { $gte: startDate, $lte: endDate };
     }
 
-    const response = await BillModel.find(filters).skip(skip).limit(_limit);
+    const response = await BillModel.find(filters)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(_limit);
 
     const count = await countDocuments(BillModel);
 
