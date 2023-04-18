@@ -1,11 +1,14 @@
-const countDocuments = require("../helper/countDocuments");
 const DoctorModel = require("../models/doctorModel");
+const countDocuments = require("../helper/countDocuments");
+const incrementCount = require("../helper/incrementCount");
 
 const addDoctor = async (req, res) => {
   try {
     const doctor = req.body;
 
-    const response = await DoctorModel.create(doctor);
+    const _id = await incrementCount("doctor_id");
+
+    const response = await DoctorModel.create({ _id, ...doctor });
 
     return res.json({ response, status: true });
   } catch (error) {
