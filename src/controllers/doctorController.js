@@ -9,6 +9,8 @@ const addDoctor = async (req, res) => {
   try {
     const doctor = req.body;
 
+    doctor.balance = 0;
+
     const _id = await incrementCount("doctor_id");
 
     const response = await DoctorModel.create({ _id, ...doctor });
