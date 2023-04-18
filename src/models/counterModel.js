@@ -5,8 +5,6 @@ const counterSchema = new Schema({
   count: { type: Number, required: true },
 });
 
-counterSchema.index({ title: 1 }, { unique: true });
-
 const CounterModel = model("Counter", counterSchema);
 
 module.exports = CounterModel;
