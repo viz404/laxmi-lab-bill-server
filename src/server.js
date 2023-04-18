@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 const billRouter = require("./routes/bill.route");
-const doctorRouter = require("./routes/doctor.route");
+const doctorRouter = require("./routes/doctorRoute");
 const workRouter = require("./routes/workRoute");
 const jobRouter = require("./routes/job.route");
 

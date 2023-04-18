@@ -1,5 +1,5 @@
 const countDocuments = require("../helper/countDocuments");
-const DoctorModel = require("../models/doctor.model");
+const DoctorModel = require("../models/doctorModel");
 
 const addDoctor = async (req, res) => {
   try {

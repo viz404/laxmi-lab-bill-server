@@ -5,7 +5,7 @@ const {
   addDoctor,
   deleteDoctorById,
   updateDoctorById,
-} = require("../controllers/doctor.controller");
+} = require("../controllers/doctorController");
 
 const doctorRouter = Router();
 
