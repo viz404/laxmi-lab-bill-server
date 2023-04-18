@@ -1,4 +1,4 @@
-const JobModel = require("../models/job.model");
+const JobModel = require("../models/jobModel");
 const countDocuments = require("../helper/countDocuments");
 
 const addJob = async (req, res) => {
