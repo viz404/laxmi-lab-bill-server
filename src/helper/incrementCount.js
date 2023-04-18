@@ -1,6 +1,6 @@
 const CounterModel = require("../models/counterModel");
 
-const incrementCount = async (_id) => {
+const incrementCount = async (_id, initial_count) => {
   if (!_id) {
     throw new Error("No id recieved");
   }
@@ -17,7 +17,10 @@ const incrementCount = async (_id) => {
     return updated_document.count;
   }
 
-  const new_document = await CounterModel.create({ _id, count: 1 });
+  const new_document = await CounterModel.create({
+    _id,
+    count: initial_count || 1,
+  });
 
   return new_document.count;
 };
