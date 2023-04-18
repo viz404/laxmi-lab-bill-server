@@ -1,3 +1,4 @@
+const incrementCount = require("../helper/incrementCount");
 const WorkModel = require("../models/workModel");
 
 const getWorkTypes = async (req, res) => {
@@ -14,7 +15,35 @@ const addWorkType = async (req, res) => {
   try {
     const { title } = req.body;
 
-    const response = await WorkModel.create({ title });
+    const _id = await incrementCount("work_id");
+
+    if (!_id) {
+      throw new Error("Work id increment failed");
+    }
+
+    const response = await WorkModel.create({ _id, title });
+
+    return res.json({ response, status: true });
+  } catch (error) {
+    res.status(500);
+    return res.json({ error: error.message, status: false });
+  }
+};
+
+const updateWorkType = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title } = req.body;
+
+    if (!title) {
+      throw new Error("Please add a title");
+    }
+
+    const response = await WorkModel.findByIdAndUpdate(
+      id,
+      { title },
+      { new: true }
+    );
 
     return res.json({ response, status: true });
   } catch (error) {
@@ -36,4 +65,4 @@ const deleteWorkType = async (req, res) => {
   }
 };
 
-module.exports = { getWorkTypes, addWorkType, deleteWorkType };
+module.exports = { getWorkTypes, addWorkType, deleteWorkType, updateWorkType };
