@@ -1,4 +1,6 @@
 const DoctorModel = require("../models/doctorModel");
+const JobModel = require("../models/jobModel");
+
 const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
 
@@ -57,6 +59,12 @@ const getDoctorById = async (req, res) => {
 const deleteDoctorById = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const jobs = await JobModel.find({ doctor: id });
+
+    if (jobs.length > 0) {
+      throw new Error("Can't delete, selected doctor is used in some jobs");
+    }
 
     const response = await DoctorModel.findByIdAndDelete(id);
 
