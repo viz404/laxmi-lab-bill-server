@@ -1,31 +1,16 @@
 const { Schema, model } = require("mongoose");
 
-const billSchema = new Schema({
-  doctorId: { type: Schema.Types.ObjectId, required: true, ref: "Doctor" },
-  doctorName: { type: String, required: true },
-  doctorAddress: { type: String, required: true },
-  createdAt: { type: Date, required: true },
-  fromDate: { type: Date, required: true },
-  tillDate: { type: Date, required: true },
-  totalAmount: { type: Number, required: true },
-  jobs: [
-    {
-      date: { type: Date, required: true },
-      jobNumber: { type: Number, required: true },
-      patientName: { type: String, required: true },
-      price: { type: Number, required: true },
-      works: [
-        {
-          title: { type: String, required: true },
-          topLeft: String,
-          topRight: String,
-          bottomLeft: String,
-          bottomRight: String,
-        },
-      ],
-    },
-  ],
-});
+const billSchema = new Schema(
+  {
+    _id: { type: Number, required: true },
+    doctor: { type: Schema.Types.ObjectId, ref: "Doctor", required: true },
+    fromDate: { type: Date, required: true },
+    tillDate: { type: Date, required: true },
+    totalAmount: { type: Number, required: true },
+    jobs: [{ type: Schema.Types.ObjectId, ref: "Job", required: true }],
+  },
+  { timestamps: true }
+);
 
 const BillModel = model("Bill", billSchema);
 
