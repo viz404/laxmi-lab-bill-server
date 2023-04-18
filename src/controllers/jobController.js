@@ -1,5 +1,6 @@
 const JobModel = require("../models/jobModel");
 const BillModel = require("../models/billModel");
+const DoctorModel = require("../models/doctorModel");
 
 const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
@@ -11,6 +12,10 @@ const addJob = async (req, res) => {
     const _id = await incrementCount("job_id");
 
     const response = await JobModel.create({ _id, ...job });
+
+    await DoctorModel.findByIdAndUpdate(response.doctor, {
+      $inc: { workCount: 1 },
+    });
 
     return res.json({ response, status: true });
   } catch (error) {
