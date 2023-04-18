@@ -1,5 +1,6 @@
 const DoctorModel = require("../models/doctorModel");
 const JobModel = require("../models/jobModel");
+const BillModel = require("../models/billModel");
 
 const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
@@ -63,7 +64,13 @@ const deleteDoctorById = async (req, res) => {
     const jobs = await JobModel.find({ doctor: id });
 
     if (jobs.length > 0) {
-      throw new Error("Can't delete, selected doctor is used in some jobs");
+      throw new Error("Can't delete, some jobs are created for this doctor");
+    }
+
+    const bills = await BillModel.find({ doctor: id });
+
+    if (bills.length > 0) {
+      throw new Error("Can't delete, some bills are created for this doctor");
     }
 
     const response = await DoctorModel.findByIdAndDelete(id);
