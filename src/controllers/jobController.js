@@ -1,11 +1,14 @@
 const JobModel = require("../models/jobModel");
 const countDocuments = require("../helper/countDocuments");
+const incrementCount = require("../helper/incrementCount");
 
 const addJob = async (req, res) => {
   try {
     const job = req.body;
 
-    const response = await JobModel.create(job);
+    const _id = await incrementCount("job_id");
+
+    const response = await JobModel.create({ _id, ...job });
 
     return res.json({ response, status: true });
   } catch (error) {
@@ -31,7 +34,7 @@ const getJobs = async (req, res) => {
     let filters = {};
 
     if (doctor_id) {
-      filters.doctorId = doctor_id;
+      filters.doctor = doctor_id;
     }
 
     if (from_date && till_date) {
@@ -47,13 +50,16 @@ const getJobs = async (req, res) => {
 
     let response = {};
 
-    if (no_limit == "true") {
-      response = await JobModel.find({ filters }).sort({ jobNumber: -1 });
+    if (no_limit == "true" && filters?.date) {
+      response = await JobModel.find({ filters })
+        .sort({ jobNumber: -1 })
+        .populate("doctor");
     } else {
       response = await JobModel.find(filters)
         .sort({ jobNumber: -1 })
         .skip(skip)
-        .limit(_limit);
+        .limit(_limit)
+        .populate("doctor");
 
       const count = await countDocuments(JobModel);
 
@@ -71,7 +77,7 @@ const getJobById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const response = await JobModel.findById(id);
+    const response = await JobModel.findById(id).populate("doctor");
 
     return res.json({ response, status: true });
   } catch (error) {
