@@ -12,6 +12,7 @@ const addBill = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -53,6 +54,7 @@ const getBills = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -66,6 +68,7 @@ const getBillById = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -79,6 +82,7 @@ const deleteBillById = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }

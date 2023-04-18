@@ -6,6 +6,7 @@ const getWorkTypes = async (req, res) => {
     const response = await WorkModel.find();
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -25,6 +26,7 @@ const addWorkType = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -47,6 +49,7 @@ const updateWorkType = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -60,6 +63,7 @@ const deleteWorkType = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }

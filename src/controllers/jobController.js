@@ -14,6 +14,7 @@ const addJob = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -70,6 +71,7 @@ const getJobs = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -83,6 +85,7 @@ const getJobById = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -97,6 +100,7 @@ const updateJobById = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
@@ -116,6 +120,7 @@ const deleteJobById = async (req, res) => {
 
     return res.json({ response, status: true });
   } catch (error) {
+    console.log(error);
     res.status(500);
     return res.json({ error: error.message, status: false });
   }
