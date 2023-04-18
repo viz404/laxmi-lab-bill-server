@@ -1,11 +1,14 @@
-const countDocuments = require("../helper/countDocuments");
 const BillModel = require("../models/billModel");
+const countDocuments = require("../helper/countDocuments");
+const incrementCount = require("../helper/incrementCount");
 
 const addBill = async (req, res) => {
   try {
     const bill = req.body;
 
-    const response = await BillModel.create(bill);
+    const _id = await incrementCount("bill_id");
+
+    const response = await BillModel.create({ _id, ...bill });
 
     return res.json({ response, status: true });
   } catch (error) {
@@ -19,7 +22,7 @@ const getBills = async (req, res) => {
     const {
       _limit = 10,
       _page = 1,
-      doctor_name,
+      doctor_id,
       start_date,
       end_date,
     } = req.query;
@@ -27,8 +30,8 @@ const getBills = async (req, res) => {
 
     let filters = {};
 
-    if (doctor_name) {
-      filters.doctorName = { $regex: new RegExp(doctor_name, "i") };
+    if (doctor_id) {
+      filters.doctor = doctor_id;
     }
 
     if (start_date && end_date) {
@@ -41,7 +44,8 @@ const getBills = async (req, res) => {
     const response = await BillModel.find(filters)
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(_limit);
+      .limit(_limit)
+      .populate(["doctor", "jobs"]);
 
     const count = await countDocuments(BillModel);
 
@@ -58,7 +62,7 @@ const getBillById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const response = await BillModel.findById(id);
+    const response = await BillModel.findById(id).populate(["doctor", "jobs"]);
 
     return res.json({ response, status: true });
   } catch (error) {
