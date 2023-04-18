@@ -4,7 +4,7 @@ const {
   getBills,
   getBillById,
   deleteBillById,
-} = require("../controllers/bill.controller");
+} = require("../controllers/billController");
 
 const billRouter = Router();
 

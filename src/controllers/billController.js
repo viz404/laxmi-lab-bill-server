@@ -1,5 +1,5 @@
 const countDocuments = require("../helper/countDocuments");
-const BillModel = require("../models/bill.model");
+const BillModel = require("../models/billModel");
 
 const addBill = async (req, res) => {
   try {
