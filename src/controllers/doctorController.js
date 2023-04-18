@@ -10,6 +10,7 @@ const addDoctor = async (req, res) => {
     const doctor = req.body;
 
     doctor.balance = 0;
+    doctor.workCount = 0;
 
     const _id = await incrementCount("doctor_id");
 
@@ -34,7 +35,10 @@ const getDoctors = async (req, res) => {
       filters.name = { $regex: new RegExp(name, "i") };
     }
 
-    const response = await DoctorModel.find(filters).skip(skip).limit(_limit);
+    const response = await DoctorModel.find(filters)
+      .skip(skip)
+      .limit(_limit)
+      .sort({ workCount: -1 });
 
     const count = await countDocuments(DoctorModel);
 
