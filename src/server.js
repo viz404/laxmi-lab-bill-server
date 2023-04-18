@@ -17,9 +17,9 @@ app.get("/", (req, res) => {
   res.send({ message: "server is running" });
 });
 
-app.use("/api/v1/work", workRouter);
-app.use("/api/v1/doctor", doctorRouter);
-app.use("/api/v1/bill", billRouter);
-app.use("/api/v1/job", jobRouter);
+app.use("/api/work", workRouter);
+app.use("/api/doctor", doctorRouter);
+app.use("/api/bill", billRouter);
+app.use("/api/job", jobRouter);
 
 module.exports = app;
