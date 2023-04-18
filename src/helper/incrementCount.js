@@ -1,6 +1,10 @@
 const CounterModel = require("../models/counterModel");
 
 const incrementCount = async (_id) => {
+  if (!_id) {
+    throw new Error("No id recieved");
+  }
+
   const document = await CounterModel.findById(_id);
 
   if (document) {
