@@ -1,4 +1,6 @@
 const JobModel = require("../models/jobModel");
+const BillModel = require("../models/billModel");
+
 const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
 
@@ -103,6 +105,12 @@ const updateJobById = async (req, res) => {
 const deleteJobById = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const bills = await BillModel.find({ jobs: { $in: [id] } });
+
+    if (bills.length > 0) {
+      throw new Error("Can't delete, this job is used in a bill");
+    }
 
     const response = await JobModel.findByIdAndDelete(id);
 
