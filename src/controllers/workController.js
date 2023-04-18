@@ -1,4 +1,4 @@
-const WorkModel = require("../models/work.model");
+const WorkModel = require("../models/workModel");
 
 const getWorkTypes = async (req, res) => {
   try {

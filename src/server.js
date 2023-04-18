@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const billRouter = require("./routes/bill.route");
 const doctorRouter = require("./routes/doctor.route");
-const workRouter = require("./routes/work.route");
+const workRouter = require("./routes/workRoute");
 const jobRouter = require("./routes/job.route");
 
 const app = express();

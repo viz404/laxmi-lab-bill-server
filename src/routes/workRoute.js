@@ -3,7 +3,7 @@ const {
   getWorkTypes,
   addWorkType,
   deleteWorkType,
-} = require("../controllers/work.controller");
+} = require("../controllers/workController");
 
 const workRouter = Router();
 
