@@ -1,9 +1,9 @@
 const JobModel = require("../models/jobModel");
-const BillModel = require("../models/billModel");
-const DoctorModel = require("../models/doctorModel");
 
 const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
+const updateDoctorWorkCount = require("../helper/updateDoctorWorkCount");
+const getJobInstancesInBill = require("../helper/getJobInstancesInBill");
 
 const addJob = async (req, res) => {
   try {
@@ -13,9 +13,7 @@ const addJob = async (req, res) => {
 
     const response = await JobModel.create({ _id, ...job });
 
-    await DoctorModel.findByIdAndUpdate(response.doctor, {
-      $inc: { workCount: 1 },
-    });
+    await updateDoctorWorkCount(response.doctor, 1);
 
     return res.json({ response, status: true });
   } catch (error) {
@@ -59,8 +57,8 @@ const getJobs = async (req, res) => {
     let response = {};
 
     if (no_limit == "true" && filters?.date) {
-      response = await JobModel.find({ filters })
-        .sort({ jobNumber: -1 })
+      response = await JobModel.find(filters)
+        .sort({ jobNumber: 1 })
         .populate("doctor");
     } else {
       response = await JobModel.find(filters)
@@ -115,7 +113,7 @@ const deleteJobById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const bills = await BillModel.find({ jobs: { $in: [id] } });
+    const bills = await getJobInstancesInBill(id);
 
     if (bills.length > 0) {
       throw new Error("Can't delete, this job is used in a bill");
@@ -123,9 +121,7 @@ const deleteJobById = async (req, res) => {
 
     const response = await JobModel.findByIdAndDelete(id);
 
-    await DoctorModel.findByIdAndUpdate(response.doctor, {
-      $inc: { workCount: -1 },
-    });
+    await updateDoctorWorkCount(response.doctor, -1);
 
     return res.json({ response, status: true });
   } catch (error) {
