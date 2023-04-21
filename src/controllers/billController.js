@@ -2,14 +2,33 @@ const BillModel = require("../models/billModel");
 
 const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
+const updateDoctorBalance = require("../helper/updateDoctorBalance");
+const createTransaction = require("../helper/createTransaction");
 
 const addBill = async (req, res) => {
   try {
     const bill = req.body;
 
-    const _id = await incrementCount("bill_id");
+    const _id = await incrementCount("bill_id", 101);
 
     const response = await BillModel.create({ _id, ...bill });
+
+    const updatedBalance = await updateDoctorBalance(
+      response.doctor,
+      response.totalAmount
+    );
+
+    const fromDate = new Intl.DateTimeFormat("en-IN").format(response.fromDate);
+    const tillDate = new Intl.DateTimeFormat("en-IN").format(response.tillDate);
+
+    const transactionParticular = `Bill no. ${_id}, from ${fromDate} - till ${tillDate}`;
+
+    await createTransaction({
+      doctorId: response.doctor,
+      balance: updatedBalance,
+      particular: transactionParticular,
+      billId: _id,
+    });
 
     return res.json({ response, status: true });
   } catch (error) {
