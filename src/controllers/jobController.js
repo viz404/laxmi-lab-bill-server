@@ -123,6 +123,10 @@ const deleteJobById = async (req, res) => {
 
     const response = await JobModel.findByIdAndDelete(id);
 
+    await DoctorModel.findByIdAndUpdate(response.doctor, {
+      $inc: { workCount: -1 },
+    });
+
     return res.json({ response, status: true });
   } catch (error) {
     console.log(error);
