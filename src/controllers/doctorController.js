@@ -1,9 +1,9 @@
 const DoctorModel = require("../models/doctorModel");
-const JobModel = require("../models/jobModel");
-const BillModel = require("../models/billModel");
 
 const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
+const getJobsByDoctorId = require("../helper/getJobsByDoctorId");
+const getBillsByDoctorId = require("../helper/getBillsByDoctorId");
 
 const addDoctor = async (req, res) => {
   try {
@@ -70,13 +70,13 @@ const deleteDoctorById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const jobs = await JobModel.find({ doctor: id });
+    const jobs = await getJobsByDoctorId(id);
 
     if (jobs.length > 0) {
       throw new Error("Can't delete, some jobs are created for this doctor");
     }
 
-    const bills = await BillModel.find({ doctor: id });
+    const bills = await getBillsByDoctorId(id);
 
     if (bills.length > 0) {
       throw new Error("Can't delete, some bills are created for this doctor");
