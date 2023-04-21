@@ -1,5 +1,6 @@
-const incrementCount = require("../helper/incrementCount");
 const WorkModel = require("../models/workModel");
+
+const incrementCount = require("../helper/incrementCount");
 
 const getWorkTypes = async (req, res) => {
   try {
