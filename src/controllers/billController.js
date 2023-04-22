@@ -4,10 +4,15 @@ const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
 const updateAccountBalance = require("../helper/updateAccountBalance");
 const createTransaction = require("../helper/createTransaction");
+const getAccountBalance = require("../helper/getAccountBalance");
 
 const addBill = async (req, res) => {
   try {
     const bill = req.body;
+
+    const previousBalance = await getAccountBalance(bill.doctor);
+
+    bill.previousBalance = previousBalance;
 
     const _id = await incrementCount("bill_id", 101);
 
