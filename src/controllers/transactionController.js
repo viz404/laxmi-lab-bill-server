@@ -17,7 +17,10 @@ const getTransactions = async (req, res) => {
 
     filters.createdAt = { $gte: fromDate, $lte: tillDate };
 
-    const response = TransactionModel.find(filters).populate("doctor");
+    const response = await TransactionModel.find(filters).populate([
+      "bill",
+      "payment",
+    ]);
 
     return res.json({ response, status: true });
   } catch (error) {
