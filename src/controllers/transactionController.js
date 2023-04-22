@@ -2,7 +2,8 @@ const TransactionModel = require("../models/transactionModel");
 
 const getTransactions = async (req, res) => {
   try {
-    const { doctor_id, from_date, till_date } = req.query;
+    const doctor_id = req.params.doctorId;
+    const { from_date, till_date } = req.query;
 
     if (!doctor_id || !from_date || !till_date) {
       res.status(400);
