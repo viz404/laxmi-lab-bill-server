@@ -4,17 +4,19 @@ const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
 const getJobsByDoctorId = require("../helper/getJobsByDoctorId");
 const getBillsByDoctorId = require("../helper/getBillsByDoctorId");
+const createAccount = require("../helper/createAccount");
 
 const addDoctor = async (req, res) => {
   try {
     const doctor = req.body;
 
-    doctor.balance = 0;
     doctor.workCount = 0;
 
     const _id = await incrementCount("doctor_id");
 
     const response = await DoctorModel.create({ _id, ...doctor });
+
+    await createAccount(_id);
 
     return res.json({ response, status: true });
   } catch (error) {
