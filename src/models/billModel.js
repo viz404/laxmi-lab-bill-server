@@ -7,6 +7,7 @@ const billSchema = new Schema(
     fromDate: { type: Date, required: true },
     tillDate: { type: Date, required: true },
     totalAmount: { type: Number, required: true },
+    previousBalance: { type: Number, required: true },
     jobs: [{ type: Number, ref: "Job", required: true }],
   },
   { timestamps: true }
