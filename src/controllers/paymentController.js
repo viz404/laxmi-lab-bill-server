@@ -1,7 +1,7 @@
 import PaymentModel from "../models/paymentModel";
 
 import incrementCount from "../helper/incrementCount";
-import updateDoctorBalance from "../helper/updateDoctorBalance";
+import updateAccountBalance from "../helper/updateAccountBalance";
 import createTransaction from "../helper/createTransaction";
 
 const addPayment = async (req, res) => {
@@ -12,7 +12,7 @@ const addPayment = async (req, res) => {
 
     const response = await PaymentModel.create({ _id, ...payment });
 
-    const updatedBalance = await updateDoctorBalance(
+    const updatedBalance = await updateAccountBalance(
       response.doctor,
       -response.amount
     );
