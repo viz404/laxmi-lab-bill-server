@@ -30,4 +30,18 @@ const getAccounts = async (req, res) => {
   }
 };
 
-module.exports = { getAccounts };
+const getAccountByDoctorId = async (req, res) => {
+  try {
+    const { doctorId } = req.params;
+
+    const response = await AccountModel.findOne({ doctor: doctorId });
+
+    return res.json({ response, status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    return res.json({ error: error.message, status: false });
+  }
+};
+
+module.exports = { getAccounts, getAccountByDoctorId };
