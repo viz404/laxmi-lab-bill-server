@@ -2,7 +2,7 @@ const BillModel = require("../models/billModel");
 
 const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
-const updateDoctorBalance = require("../helper/updateDoctorBalance");
+const updateAccountBalance = require("../helper/updateAccountBalance");
 const createTransaction = require("../helper/createTransaction");
 
 const addBill = async (req, res) => {
@@ -13,7 +13,7 @@ const addBill = async (req, res) => {
 
     const response = await BillModel.create({ _id, ...bill });
 
-    const updatedBalance = await updateDoctorBalance(
+    const updatedBalance = await updateAccountBalance(
       response.doctor,
       response.totalAmount
     );
