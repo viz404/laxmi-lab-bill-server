@@ -16,7 +16,7 @@ const addDoctor = async (req, res) => {
 
     const response = await DoctorModel.create({ _id, ...doctor });
 
-    await createAccount(_id);
+    await createAccount(_id, response.name);
 
     return res.json({ response, status: true });
   } catch (error) {
