@@ -6,6 +6,7 @@ const billRouter = require("./routes/billRoute");
 const doctorRouter = require("./routes/doctorRoute");
 const workRouter = require("./routes/workRoute");
 const jobRouter = require("./routes/jobRoute");
+const accountRouter = require("./routes/accountRoute");
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use("/api/work", workRouter);
 app.use("/api/doctor", doctorRouter);
 app.use("/api/bill", billRouter);
 app.use("/api/job", jobRouter);
+app.use("/api/account", accountRouter);
 
 module.exports = app;
