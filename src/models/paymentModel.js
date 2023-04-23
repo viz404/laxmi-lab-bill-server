@@ -8,6 +8,7 @@ const paymentSchema = new Schema({
   mode: { type: String, required: true },
   mobile: Number,
   chequeNumber: Number,
+  notes: String,
 });
 
 const PaymentModel = model("Payment", paymentSchema);
