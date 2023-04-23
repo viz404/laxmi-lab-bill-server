@@ -8,14 +8,6 @@ const createTransaction = async ({
   billId,
   paymentId,
 }) => {
-  if (!doctorId || !balance || !particular) {
-    throw new Error("Incomplete details");
-  }
-
-  if (!billId && !paymentId) {
-    throw new Error("Incomplete details");
-  }
-
   const _id = await incrementCount("transaction_id");
 
   const transactionObj = {
