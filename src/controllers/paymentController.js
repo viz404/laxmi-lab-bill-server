@@ -1,14 +1,14 @@
-import PaymentModel from "../models/paymentModel";
+const PaymentModel = require("../models/paymentModel");
 
-import incrementCount from "../helper/incrementCount";
-import updateAccountBalance from "../helper/updateAccountBalance";
-import createTransaction from "../helper/createTransaction";
+const incrementCount = require("../helper/incrementCount");
+const updateAccountBalance = require("../helper/updateAccountBalance");
+const createTransaction = require("../helper/createTransaction");
 
 const addPayment = async (req, res) => {
   try {
     const payment = req.body;
 
-    const _id = incrementCount("payment_id");
+    const _id = await incrementCount("payment_id");
 
     const response = await PaymentModel.create({ _id, ...payment });
 
@@ -33,3 +33,5 @@ const addPayment = async (req, res) => {
     return res.json({ error: error.message, status: false });
   }
 };
+
+module.exports = { addPayment };
