@@ -2,10 +2,13 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 
-const billRouter = require("./routes/bill.route");
-const doctorRouter = require("./routes/doctor.route");
-const workRouter = require("./routes/work.route");
-const jobRouter = require("./routes/job.route");
+const billRouter = require("./routes/billRoute");
+const doctorRouter = require("./routes/doctorRoute");
+const workRouter = require("./routes/workRoute");
+const jobRouter = require("./routes/jobRoute");
+const accountRouter = require("./routes/accountRoute");
+const transactionRouter = require("./routes/transactionRoute");
+const paymentRouter = require("./routes/paymentRoute");
 
 const app = express();
 
@@ -17,9 +20,12 @@ app.get("/", (req, res) => {
   res.send({ message: "server is running" });
 });
 
-app.use("/api/v1/work", workRouter);
-app.use("/api/v1/doctor", doctorRouter);
-app.use("/api/v1/bill", billRouter);
-app.use("/api/v1/job", jobRouter);
+app.use("/api/work", workRouter);
+app.use("/api/doctor", doctorRouter);
+app.use("/api/bill", billRouter);
+app.use("/api/job", jobRouter);
+app.use("/api/account", accountRouter);
+app.use("/api/transaction", transactionRouter);
+app.use("/api/payment", paymentRouter);
 
 module.exports = app;

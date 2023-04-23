@@ -5,7 +5,7 @@ const {
   getJobById,
   updateJobById,
   deleteJobById,
-} = require("../controllers/job.controller");
+} = require("../controllers/jobController");
 
 const jobRouter = Router();
 
