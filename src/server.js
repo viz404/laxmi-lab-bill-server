@@ -8,6 +8,7 @@ const workRouter = require("./routes/workRoute");
 const jobRouter = require("./routes/jobRoute");
 const accountRouter = require("./routes/accountRoute");
 const transactionRouter = require("./routes/transactionRoute");
+const paymentRouter = require("./routes/paymentRoute");
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use("/api/bill", billRouter);
 app.use("/api/job", jobRouter);
 app.use("/api/account", accountRouter);
 app.use("/api/transaction", transactionRouter);
+app.use("/api/payment", paymentRouter);
 
 module.exports = app;
