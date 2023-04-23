@@ -1,7 +1,7 @@
-const AccountModel = require("../models/accountModel");
+const DoctorModel = require("../models/doctorModel");
 
 const getAccountBalance = async (doctor_id) => {
-  const response = await AccountModel.findOne({ doctor: doctor_id });
+  const response = await DoctorModel.findById(doctor_id);
   return response.balance;
 };
 

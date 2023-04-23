@@ -4,19 +4,17 @@ const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
 const getJobsByDoctorId = require("../helper/getJobsByDoctorId");
 const getBillsByDoctorId = require("../helper/getBillsByDoctorId");
-const createAccount = require("../helper/createAccount");
 
 const addDoctor = async (req, res) => {
   try {
     const doctor = req.body;
 
     doctor.workCount = 0;
+    doctor.balance = 0;
 
     const _id = await incrementCount("doctor_id");
 
     const response = await DoctorModel.create({ _id, ...doctor });
-
-    await createAccount(_id, response.name);
 
     return res.json({ response, status: true });
   } catch (error) {
@@ -28,7 +26,7 @@ const addDoctor = async (req, res) => {
 
 const getDoctors = async (req, res) => {
   try {
-    const { _limit = 10, _page = 1, name } = req.query;
+    const { _limit = 10, _page = 1, name, sort = "workCount" } = req.query;
     const skip = _page > 0 ? (_page - 1) * _limit : 0;
 
     let filters = {};
@@ -40,7 +38,7 @@ const getDoctors = async (req, res) => {
     const response = await DoctorModel.find(filters)
       .skip(skip)
       .limit(_limit)
-      .sort({ workCount: -1 });
+      .sort({ [sort]: -1 });
 
     const count = await countDocuments(DoctorModel);
 

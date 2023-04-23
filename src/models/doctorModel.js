@@ -7,6 +7,7 @@ const doctorSchema = new Schema({
   area: { type: String, required: true },
   address: { type: String, required: true },
   workCount: { type: Number, required: true },
+  balance: { type: Number, required: true },
   typeOfWorks: [
     {
       title: { type: String, required: true },
