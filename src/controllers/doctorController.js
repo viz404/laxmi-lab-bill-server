@@ -4,6 +4,7 @@ const countDocuments = require("../helper/countDocuments");
 const incrementCount = require("../helper/incrementCount");
 const getJobsByDoctorId = require("../helper/getJobsByDoctorId");
 const getBillsByDoctorId = require("../helper/getBillsByDoctorId");
+const createTransaction = require("../helper/createTransaction");
 
 const addDoctor = async (req, res) => {
   try {
@@ -13,6 +14,19 @@ const addDoctor = async (req, res) => {
     doctor.balance = 0;
 
     const _id = await incrementCount("doctor_id");
+
+    if (doctor?.previousBalance) {
+      doctor.balance = doctor.previousBalance;
+
+      await createTransaction({
+        doctorId: _id,
+        balance: doctor.previousBalance,
+        particular: doctor.balanceDescription,
+      });
+    }
+
+    delete doctor.previousBalance;
+    delete doctor.balanceDescription;
 
     const response = await DoctorModel.create({ _id, ...doctor });
 
@@ -96,6 +110,30 @@ const updateDoctorById = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedDoctor = req.body;
+
+    if (updatedDoctor?.previousBalance) {
+      const previousBalance = updatedDoctor.previousBalance;
+      const balanceDescription = updatedDoctor.balanceDescription;
+
+      const response = await DoctorModel.findByIdAndUpdate(
+        id,
+        {
+          $inc: { balance: previousBalance },
+        },
+        { new: true }
+      );
+
+      await createTransaction({
+        doctorId: id,
+        balance: previousBalance,
+        particular: balanceDescription,
+      });
+
+      delete updatedDoctor.previousBalance;
+      delete updatedDoctor.balanceDescription;
+
+      updatedDoctor.balance = response.balance;
+    }
 
     const response = await DoctorModel.findByIdAndUpdate(id, updatedDoctor);
 
