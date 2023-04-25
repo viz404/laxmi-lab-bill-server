@@ -8,7 +8,7 @@ const paymentSchema = new Schema({
   date: { type: Date, required: true },
   mode: { type: String, required: true },
   mobile: Number,
-  chequeNumber: Number,
+  cheque: Number,
   notes: String,
 });
 
