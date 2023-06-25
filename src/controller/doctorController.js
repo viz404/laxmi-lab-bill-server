@@ -1,5 +1,5 @@
 import { DoctorModel } from "../model";
-import { nextCount } from "../helper";
+import { nextCount, createAccount } from "../helper";
 
 async function addDoctor(req, res) {
   try {
@@ -15,6 +15,13 @@ async function addDoctor(req, res) {
       address,
       works,
     });
+
+    const accountCreation = await createAccount(name, id);
+
+    if (accountCreation.status == false) {
+      DoctorModel.deleteOne({ id });
+      throw new Error(accountCreation.error);
+    }
 
     let modified = response.toObject();
 
@@ -46,14 +53,41 @@ async function getDoctors(req, res) {
       filter.name = { $regex: new RegExp(name, "i") };
     }
 
-    const response = await DoctorModel.find(filter, {
-      _id: 0,
-      __v: 0,
-      "works._id": 0,
-    })
-      .sort({ [sort]: -1 })
-      .skip(skip)
-      .limit(limit);
+    const response = await DoctorModel.aggregate([
+      {
+        $match: filter,
+      },
+      {
+        $lookup: {
+          from: "accounts",
+          localField: "id",
+          foreignField: "doctor.id",
+          as: "accountDetails",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          __v: 0,
+          works: 0,
+          "accountDetails._id": 0,
+          "accountDetails.__v": 0,
+          "accountDetails.doctor": 0,
+        },
+      },
+      {
+        $unwind: "$accountDetails",
+      },
+      {
+        $sort: { [sort]: -1 },
+      },
+      {
+        $skip: skip,
+      },
+      {
+        $limit: limit,
+      },
+    ]);
 
     const count = await DoctorModel.countDocuments(filter);
 
@@ -116,7 +150,7 @@ async function deleteDoctor(req, res) {
 
     const response = await DoctorModel.deleteOne({ id });
 
-    res.json({ success: true, data: response });
+    res.json({ status: true, data: response });
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: false, error: "Something went wrong" });

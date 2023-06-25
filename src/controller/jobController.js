@@ -149,7 +149,7 @@ async function deleteJob(req, res) {
 
     const response = await JobModel.deleteOne({ id });
 
-    res.json({ success: true, data: response });
+    res.json({ status: true, data: response });
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: false, error: "Something went wrong" });

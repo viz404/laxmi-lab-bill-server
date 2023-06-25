@@ -16,7 +16,7 @@ const accountSchema = new Schema({
     amount: Number,
     date: Date,
   },
-  balance: { type: Number, required: true },
+  balance: { type: Number, default: 0 },
 });
 
 const AccountModel = model("Account", accountSchema);
