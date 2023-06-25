@@ -12,6 +12,10 @@ router.post(
 router.get("/", doctorController.getDoctors);
 router.get("/:id", doctorController.getDoctorById);
 router.patch("/:id", doctorController.updateDoctor);
-router.delete("/:id", doctorController.deleteDoctor);
+router.delete(
+  "/:id",
+  doctorMiddleware.checkDoctorReferences,
+  doctorController.deleteDoctor
+);
 
 export default router;

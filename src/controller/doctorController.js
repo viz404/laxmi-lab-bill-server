@@ -1,5 +1,5 @@
 import { DoctorModel } from "../model";
-import { nextCount, createAccount } from "../helper";
+import { nextCount, createAccount, deleteAccountByDoctorId } from "../helper";
 
 async function addDoctor(req, res) {
   try {
@@ -79,7 +79,7 @@ async function getDoctors(req, res) {
         $unwind: "$accountDetails",
       },
       {
-        $sort: { [sort]: -1 },
+        $sort: { [sort]: 1 },
       },
       {
         $skip: skip,
@@ -149,6 +149,11 @@ async function deleteDoctor(req, res) {
     const { id } = req.params;
 
     const response = await DoctorModel.deleteOne({ id });
+
+    const deleteAccount = await deleteAccountByDoctorId(id);
+    if (deleteAccount.status == false) {
+      throw new Error(deleteAccount.error);
+    }
 
     res.json({ status: true, data: response });
   } catch (error) {

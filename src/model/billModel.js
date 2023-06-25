@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const billSchema = new Schema({
   id: { type: Number, required: true },
@@ -13,3 +13,6 @@ const billSchema = new Schema({
   },
   jobs: [{ type: Number, required: true }],
 });
+
+const BillModel = mongoose.model("Bill", billSchema);
+export default BillModel;

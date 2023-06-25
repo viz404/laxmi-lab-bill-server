@@ -7,6 +7,10 @@ const transactionSchema = new Schema({
   amount: { type: Number, required: true },
   reference: { type: Number, required: true },
   type: { type: String, required: true },
+  doctor: {
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+  },
 });
 
 const TransactionModel = model("Transaction", transactionSchema);
