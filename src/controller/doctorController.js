@@ -62,7 +62,7 @@ async function getDoctors(req, res) {
           from: "accounts",
           localField: "id",
           foreignField: "doctor.id",
-          as: "accountDetails",
+          as: "account_details",
         },
       },
       {
@@ -70,13 +70,13 @@ async function getDoctors(req, res) {
           _id: 0,
           __v: 0,
           works: 0,
-          "accountDetails._id": 0,
-          "accountDetails.__v": 0,
-          "accountDetails.doctor": 0,
+          "account_details._id": 0,
+          "account_details.__v": 0,
+          "account_details.doctor": 0,
         },
       },
       {
-        $unwind: "$accountDetails",
+        $unwind: "$account_details",
       },
       {
         $sort: { [sort]: 1 },

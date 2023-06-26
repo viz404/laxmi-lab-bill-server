@@ -8,12 +8,12 @@ const accountSchema = new Schema({
   },
   previous_bill: {
     id: Number,
-    amount: Number,
+    amount: { type: Number, default: 0 },
     date: Date,
   },
   previous_payment: {
     id: Number,
-    amount: Number,
+    amount: { type: Number, default: 0 },
     date: Date,
   },
   balance: { type: Number, default: 0 },
