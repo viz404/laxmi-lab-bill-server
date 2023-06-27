@@ -1,11 +1,17 @@
 import { DoctorModel } from "../model";
-import { nextCount, createAccount, deleteAccountByDoctorId } from "../helper";
+import { nextCount, accountHelper } from "../helper";
 
 async function addDoctor(req, res) {
   try {
     const { name, phone, area, address, works } = req.body;
 
     const id = await nextCount("doctors");
+
+    const accountCreation = await accountHelper.createAccount(name, id);
+
+    if (accountCreation.status == false) {
+      throw new Error(accountCreation.error);
+    }
 
     const response = await DoctorModel.create({
       id,
@@ -15,13 +21,6 @@ async function addDoctor(req, res) {
       address,
       works,
     });
-
-    const accountCreation = await createAccount(name, id);
-
-    if (accountCreation.status == false) {
-      DoctorModel.deleteOne({ id });
-      throw new Error(accountCreation.error);
-    }
 
     let modified = response.toObject();
 
@@ -120,6 +119,24 @@ async function getDoctorById(req, res) {
   }
 }
 
+async function getDoctorNames(req, res) {
+  try {
+    const name = req.query.name || "";
+    let filter = {};
+
+    if (name != "") {
+      filter.name = { $regex: new RegExp(name, "i") };
+    }
+
+    const response = await DoctorModel.find(filter, { id: 1, name: 1, _id: 0 });
+
+    res.json({ status: true, data: response });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: false, error: "Something went wrong" });
+  }
+}
+
 async function updateDoctor(req, res) {
   try {
     const { id } = req.params;
@@ -148,12 +165,12 @@ async function deleteDoctor(req, res) {
   try {
     const { id } = req.params;
 
-    const response = await DoctorModel.deleteOne({ id });
-
-    const deleteAccount = await deleteAccountByDoctorId(id);
-    if (deleteAccount.status == false) {
-      throw new Error(deleteAccount.error);
+    const accountDelete = await accountHelper.deleteAccountByDoctorId(id);
+    if (accountDelete.status == false) {
+      throw new Error(accountDelete.error);
     }
+
+    const response = await DoctorModel.deleteOne({ id });
 
     res.json({ status: true, data: response });
   } catch (error) {
@@ -168,4 +185,5 @@ export default {
   getDoctorById,
   updateDoctor,
   deleteDoctor,
+  getDoctorNames,
 };

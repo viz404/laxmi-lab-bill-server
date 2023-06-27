@@ -5,7 +5,7 @@ const transactionSchema = new Schema({
   particular: { type: String, required: true },
   date: { type: Date, required: true },
   amount: { type: Number, required: true },
-  reference: { type: Number, required: true },
+  reference: Number,
   type: { type: String, required: true, enum: ["Bill", "Payment"] },
   doctor: {
     id: { type: Number, required: true },

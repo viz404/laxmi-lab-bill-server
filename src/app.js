@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 app.use("/api/works", router.workRouter);
 app.use("/api/doctors", router.doctorRouter);
 app.use("/api/jobs", router.jobRouter);
+app.use("/api/accounts", router.accountRouter);
 
 connectDatabase()
   .then(() => {

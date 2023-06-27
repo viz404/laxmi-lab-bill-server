@@ -10,6 +10,7 @@ router.post(
   doctorController.addDoctor
 );
 router.get("/", doctorController.getDoctors);
+router.get("/names", doctorController.getDoctorNames);
 router.get("/:id", doctorController.getDoctorById);
 router.patch("/:id", doctorController.updateDoctor);
 router.delete(
