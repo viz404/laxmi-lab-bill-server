@@ -2,21 +2,21 @@ import { Router } from "express";
 import { doctorController } from "../controller";
 import { doctorMiddleware } from "../middleware";
 
-const router = Router();
+const doctorRouter = Router();
 
-router.post(
+doctorRouter.post(
   "/",
   doctorMiddleware.verifyRequestBody,
   doctorController.addDoctor
 );
-router.get("/", doctorController.getDoctors);
-router.get("/names", doctorController.getDoctorNames);
-router.get("/:id", doctorController.getDoctorById);
-router.patch("/:id", doctorController.updateDoctor);
-router.delete(
+doctorRouter.get("/", doctorController.getDoctors);
+doctorRouter.get("/names", doctorController.getDoctorNames);
+doctorRouter.get("/:id", doctorController.getDoctorById);
+doctorRouter.patch("/:id", doctorController.updateDoctor);
+doctorRouter.delete(
   "/:id",
   doctorMiddleware.checkDoctorReferences,
   doctorController.deleteDoctor
 );
 
-export default router;
+export default doctorRouter;

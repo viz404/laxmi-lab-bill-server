@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { billController } from "../controller";
 
-const router = Router();
+const billRouter = Router();
 
-router.post("/manual", billController.addBillManual);
+billRouter.post("/manual", billController.addBillManual);
 
-export default router;
+export default billRouter;

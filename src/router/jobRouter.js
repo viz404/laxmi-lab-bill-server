@@ -2,13 +2,13 @@ import { Router } from "express";
 import { jobController } from "../controller";
 import { jobMiddleware } from "../middleware";
 
-const router = Router();
+const jobRouter = Router();
 
-router.post("/", jobMiddleware.verifyRequestBody, jobController.addJob);
-router.get("/", jobController.getJobs);
-router.get("/:id", jobController.getJobById);
-router.get("/number/:job_number", jobController.getJobByNumber);
-router.patch("/:id", jobController.updateJob);
-router.delete("/:id", jobController.deleteJob);
+jobRouter.post("/", jobMiddleware.verifyRequestBody, jobController.addJob);
+jobRouter.get("/", jobController.getJobs);
+jobRouter.get("/:id", jobController.getJobById);
+jobRouter.get("/number/:job_number", jobController.getJobByNumber);
+jobRouter.patch("/:id", jobController.updateJob);
+jobRouter.delete("/:id", jobController.deleteJob);
 
-export default router;
+export default jobRouter;

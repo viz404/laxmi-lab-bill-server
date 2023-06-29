@@ -2,15 +2,15 @@ import { Router } from "express";
 import { workController } from "../controller";
 import { workMiddleware } from "../middleware";
 
-const router = Router();
+const workRouter = Router();
 
-router.post("/", workMiddleware.verifyRequestBody, workController.addWork);
-router.get("/", workController.getWorks);
-router.delete("/:id", workController.deleteWork);
-router.patch(
+workRouter.post("/", workMiddleware.verifyRequestBody, workController.addWork);
+workRouter.get("/", workController.getWorks);
+workRouter.delete("/:id", workController.deleteWork);
+workRouter.patch(
   "/:id",
   workMiddleware.verifyRequestBody,
   workController.updateWork
 );
 
-export default router;
+export default workRouter;

@@ -3,7 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 import variables from "./config/variables";
-import router from "./router";
+import * as router from "./router";
 import connectDatabase from "./config/database";
 
 const app = express();
@@ -21,6 +21,7 @@ app.use("/api/works", router.workRouter);
 app.use("/api/doctors", router.doctorRouter);
 app.use("/api/jobs", router.jobRouter);
 app.use("/api/accounts", router.accountRouter);
+app.use("/api/bills", router.billRouter);
 
 connectDatabase()
   .then(() => {
