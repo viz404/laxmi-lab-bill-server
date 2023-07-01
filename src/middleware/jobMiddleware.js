@@ -1,10 +1,9 @@
 async function verifyRequestBody(req, res, next) {
   try {
-    const { date, job_number, patient_name, works, doctor_id, doctor_name } =
-      req.body;
+    const { date, job_number, works, doctor_id, doctor_name } = req.body;
     let invalidData = false;
 
-    if (!date || !job_number || !patient_name || !doctor_id || !doctor_name) {
+    if (!date || !job_number || !doctor_id || !doctor_name) {
       invalidData = true;
     }
 
@@ -38,6 +37,25 @@ async function verifyRequestBody(req, res, next) {
   }
 }
 
+async function verifyPriceRequest(req, res, next) {
+  try {
+    const { from_date, to_date } = req.query;
+    const { doctor_id } = req.params;
+
+    if (!doctor_id || !from_date || !to_date) {
+      res.status(400).json({ status: false, error: "invalid data provided" });
+      return res;
+    }
+
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: false, error: "Something went wrong" });
+    return res;
+  }
+}
+
 export default {
   verifyRequestBody,
+  verifyPriceRequest,
 };

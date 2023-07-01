@@ -10,5 +10,10 @@ jobRouter.get("/:id", jobController.getJobById);
 jobRouter.get("/number/:job_number", jobController.getJobByNumber);
 jobRouter.patch("/:id", jobController.updateJob);
 jobRouter.delete("/:id", jobController.deleteJob);
+jobRouter.get(
+  "/price/doctor/:doctor_id",
+  jobMiddleware.verifyPriceRequest,
+  jobController.getJobsWithPrice
+);
 
 export default jobRouter;

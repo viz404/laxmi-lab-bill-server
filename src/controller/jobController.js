@@ -1,5 +1,6 @@
 import { JobModel } from "../model";
-import { nextCount } from "../helper";
+import { doctorHelper, nextCount } from "../helper";
+import calculationHelper from "../helper/calculationHelper";
 
 async function addJob(req, res) {
   try {
@@ -51,7 +52,7 @@ async function addJob(req, res) {
 async function getJobs(req, res) {
   try {
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const limit = Number(req.query.limit) || 20;
     const skip = page > 0 ? (page - 1) * limit : 0;
 
     const doctor_name = req.query.doctor_name || "";
@@ -71,7 +72,7 @@ async function getJobs(req, res) {
       .skip(skip)
       .limit(limit);
 
-    const count = JobModel.countDocuments(filter);
+    const count = await JobModel.countDocuments(filter);
 
     res.json({
       status: true,
@@ -156,6 +157,32 @@ async function deleteJob(req, res) {
   }
 }
 
+async function getJobsWithPrice(req, res) {
+  try {
+    const { from_date, to_date } = req.query;
+    const { doctor_id } = req.params;
+
+    const doctor = await doctorHelper.getDoctorDetails(doctor_id);
+
+    const jobs = await JobModel.find(
+      { "doctor.id": doctor_id },
+      { doctor: 0, _id: 0, __v: 0, "works._id": 0 }
+    ).lean();
+
+    const amount = calculationHelper.updatejobWithPrice(jobs, doctor.works);
+
+    res.json({
+      status: true,
+      data: jobs,
+      amount,
+      doctor: { name: doctor.name, phone: doctor.phone },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: false, error: "Something went wrong" });
+  }
+}
+
 export default {
   addJob,
   getJobs,
@@ -163,4 +190,5 @@ export default {
   getJobByNumber,
   updateJob,
   deleteJob,
+  getJobsWithPrice,
 };
