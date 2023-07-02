@@ -76,7 +76,25 @@ async function deleteTransaction(id) {
   }
 }
 
+async function deleteLastTransactionByBillId(id) {
+  try {
+    if (!id) {
+      throw new Error("no id recieved");
+    }
+
+    const response = await TransactionModel.deleteOne({
+      reference: id,
+      type: "Bill",
+    });
+
+    return { status: true, data: response };
+  } catch (error) {
+    return { status: false, error };
+  }
+}
+
 export default {
   createTransaction,
-  deleteTransaction
+  deleteTransaction,
+  deleteLastTransactionByBillId,
 };

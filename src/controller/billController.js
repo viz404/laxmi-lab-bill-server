@@ -1,4 +1,9 @@
-import { accountHelper, nextCount, transactionHelper } from "../helper";
+import {
+  accountHelper,
+  doctorHelper,
+  nextCount,
+  transactionHelper,
+} from "../helper";
 import { BillModel, JobModel } from "../model";
 
 async function addBillManual(req, res) {
@@ -68,7 +73,7 @@ async function addBill(req, res) {
       reference: id,
       particular: `Bill created for ${currentMonth}`,
       date: currentDate,
-      amount: total_amount,
+      amount,
       type: "Bill",
       doctor_id: doctor.id,
       doctor_name: doctor.name,
@@ -80,11 +85,11 @@ async function addBill(req, res) {
     }
 
     const balance = await accountHelper.updateBalance({
-      amount: total_amount,
+      amount,
       doctor_id: doctor.id,
       previous_bill: {
         id,
-        amount: total_amount,
+        amount,
         date: currentDate,
       },
     });
@@ -170,9 +175,36 @@ async function getBills(req, res) {
   }
 }
 
+async function deleteBill(req, res) {
+  try {
+    const id = Number(req.params.id);
+
+    const transactionResponse =
+      await transactionHelper.deleteLastTransactionByBillId(id);
+    if (transactionResponse.status == false) {
+      throw new Error(transactionResponse.error);
+    }
+
+    const bill = await BillModel.findOne({ id });
+
+    const accountResponse = await accountHelper.deleteLastBill(bill.doctor.id);
+    if (accountResponse.status == false) {
+      throw new Error(accountResponse.error);
+    }
+
+    const repsonse = await BillModel.deleteOne({ id });
+
+    res.json({ status: true, data: repsonse });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: false, error: "Something went wrong" });
+  }
+}
+
 export default {
   addBillManual,
   addBill,
   getBill,
   getBills,
+  deleteBill,
 };

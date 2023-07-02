@@ -8,5 +8,6 @@ billRouter.post("/manual", billController.addBillManual);
 billRouter.post("/", billMiddleware.verifyRequestBody, billController.addBill);
 billRouter.get("/:bill_id", billController.getBill);
 billRouter.get("/", billController.getBills);
+billRouter.delete("/:id", billController.deleteBill);
 
 export default billRouter;
