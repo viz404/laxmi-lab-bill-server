@@ -7,5 +7,6 @@ const billRouter = Router();
 billRouter.post("/manual", billController.addBillManual);
 billRouter.post("/", billMiddleware.verifyRequestBody, billController.addBill);
 billRouter.get("/:bill_id", billController.getBill);
+billRouter.get("/", billController.getBills);
 
 export default billRouter;
