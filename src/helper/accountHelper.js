@@ -66,4 +66,18 @@ async function updateBalance({
   }
 }
 
-export default { deleteAccountByDoctorId, createAccount, updateBalance };
+async function getAccount(doctor_id) {
+  try {
+    const account = await AccountModel.findOne({ "doctor.id": doctor_id });
+    return { stauts: true, data: account };
+  } catch (error) {
+    return { stauts: false, error };
+  }
+}
+
+export default {
+  deleteAccountByDoctorId,
+  createAccount,
+  updateBalance,
+  getAccount,
+};

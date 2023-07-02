@@ -2,9 +2,10 @@ import { DoctorModel } from "../model";
 
 async function getDoctorDetails(id) {
   try {
-    return await DoctorModel.findOne({ id }, { __v: 0, _id: 0 });
+    const doctor = await DoctorModel.findOne({ id }, { __v: 0, _id: 0 });
+    return { status: true, data: doctor };
   } catch (error) {
-    throw new Error(error);
+    return { status: false, error };
   }
 }
 

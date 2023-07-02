@@ -1,5 +1,5 @@
 import { JobModel } from "../model";
-import { doctorHelper, nextCount } from "../helper";
+import { accountHelper, doctorHelper, nextCount } from "../helper";
 import calculationHelper from "../helper/calculationHelper";
 
 async function addJob(req, res) {
@@ -159,15 +159,30 @@ async function deleteJob(req, res) {
 
 async function getJobsWithPrice(req, res) {
   try {
-    const { from_date, to_date } = req.query;
+    let { from_date, to_date } = req.query;
     const { doctor_id } = req.params;
 
-    const doctor = await doctorHelper.getDoctorDetails(doctor_id);
+    const doctorResponse = await doctorHelper.getDoctorDetails(doctor_id);
+    if (doctorResponse.status == false) {
+      throw new Error(doctorResponse.error);
+    }
+
+    const doctor = doctorResponse.data;
+
+    const accountResponse = await accountHelper.getAccount(doctor_id);
+    if (accountResponse.stauts == false) {
+      throw new Error(accountResponse.error);
+    }
+
+    from_date = new Date(from_date);
+    to_date = new Date(to_date);
 
     const jobs = await JobModel.find(
-      { "doctor.id": doctor_id },
+      { "doctor.id": doctor_id, date: { $gte: from_date, $lte: to_date } },
       { doctor: 0, _id: 0, __v: 0, "works._id": 0 }
-    ).lean();
+    )
+      .sort({ job_number: 1 })
+      .lean();
 
     const amount = calculationHelper.updatejobWithPrice(jobs, doctor.works);
 
@@ -175,7 +190,13 @@ async function getJobsWithPrice(req, res) {
       status: true,
       data: jobs,
       amount,
-      doctor: { name: doctor.name, phone: doctor.phone },
+      doctor: {
+        name: doctor.name,
+        phone: doctor.phone,
+        address: doctor.address,
+      },
+      previous_balance: accountResponse.data.balance,
+      total_amount: amount + accountResponse.data.balance,
     });
   } catch (error) {
     console.log(error);
