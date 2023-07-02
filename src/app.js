@@ -22,6 +22,7 @@ app.use("/api/doctors", router.doctorRouter);
 app.use("/api/jobs", router.jobRouter);
 app.use("/api/accounts", router.accountRouter);
 app.use("/api/bills", router.billRouter);
+app.use("/api/payments", router.paymentRouter);
 
 connectDatabase()
   .then(() => {
