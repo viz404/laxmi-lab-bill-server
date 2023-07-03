@@ -152,7 +152,7 @@ async function getBills(req, res) {
     const filter = {};
 
     if (doctor_name != "") {
-      filter.doctor_name = { $regex: new RegExp(doctor_name, "i") };
+      filter["doctor.name"] = { $regex: new RegExp(doctor_name, "i") };
     }
 
     const response = await BillModel.find(filter)
