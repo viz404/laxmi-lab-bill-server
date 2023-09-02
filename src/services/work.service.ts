@@ -61,6 +61,24 @@ export class WorkService {
         };
     }
 
+    async deleteWork(id: number) {
+        const isValid = this.validate({ id });
+
+        if (isValid === false) {
+            return {
+                status: 400,
+                json: {
+                    error: "Invalid request. Please pass the required fields.",
+                },
+            };
+        }
+
+        return {
+            status: 200,
+            json: await workRepository.delete(id),
+        };
+    }
+
     private validate(params: Record<string, any>) {
         for (let key in params) {
             if (

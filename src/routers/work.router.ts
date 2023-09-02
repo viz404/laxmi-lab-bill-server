@@ -33,10 +33,29 @@ workRouter.get("/works", async (req, res, next) => {
 });
 
 workRouter.patch("/works/:id", async (req, res, next) => {
-    const { id } = req.params;
-    const { title } = req.body;
+    try {
+        const { id } = req.params;
+        const { title } = req.body;
 
-    const { status, json } = await workService.updateWork(title, Number(id));
+        const { status, json } = await workService.updateWork(
+            title,
+            Number(id)
+        );
 
-    return res.status(status).json(json);
+        return res.status(status).json(json);
+    } catch (error) {
+        next(error);
+    }
+});
+
+workRouter.delete("/works/:id", async (req, res, next) => {
+    try {
+        const { id } = req.query;
+
+        const { status, json } = await workService.deleteWork(Number(id));
+
+        return res.status(status).json(json);
+    } catch (error) {
+        next(error);
+    }
 });
