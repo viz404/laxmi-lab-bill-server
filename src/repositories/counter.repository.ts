@@ -1,10 +1,19 @@
-import { counterModel } from "../models";
+import { Model } from "mongoose";
+import { ICounter } from "../types/counter.types";
 
-export class CounterRepository {
+import { CounterModel } from "../models";
+
+class CounterRepository {
+    private counterModel: Model<ICounter>;
+
+    constructor(counterModel: Model<ICounter>) {
+        this.counterModel = counterModel;
+    }
+
     async getId(model: string, initialCount = 1) {
-        const prev = await counterModel.findOne({ model });
+        const prev = await this.counterModel.findOne({ model });
 
-        const response = await counterModel.findOneAndUpdate(
+        const response = await this.counterModel.findOneAndUpdate(
             {
                 model,
             },
@@ -18,9 +27,11 @@ export class CounterRepository {
         );
 
         if (!response) {
-            throw new Error("No counter document found for " + model);
+            throw new Error(`No counter document found for model: ${model}`);
         }
 
         return response.count;
     }
 }
+
+export const counterRepository = new CounterRepository(CounterModel);
