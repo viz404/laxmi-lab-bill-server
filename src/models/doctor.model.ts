@@ -7,13 +7,16 @@ const workSchema = new Schema<IWork>({
     price: { type: String, required: true },
 });
 
-const doctorSchema = new Schema<IDoctor>({
-    _id: { type: Number, required: true },
-    name: { type: String, required: true, unique: true },
-    phone: { type: Number },
-    area: { type: String },
-    address: { type: String },
-    works: [workSchema],
-});
+const doctorSchema = new Schema<IDoctor>(
+    {
+        _id: { type: Number, required: true },
+        name: { type: String, required: true, unique: true },
+        phone: { type: Number },
+        area: { type: String },
+        address: { type: String },
+        works: { type: [workSchema], required: true },
+    },
+    { timestamps: true }
+);
 
 export const DoctorModel: Model<IDoctor> = model(MODEL.DOCTOR, doctorSchema);

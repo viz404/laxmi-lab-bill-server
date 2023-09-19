@@ -1,19 +1,10 @@
-import { Model } from "mongoose";
-import { ICounter } from "../types/counter.types";
-
 import { CounterModel } from "../models";
 
 class CounterRepository {
-    private counterModel: Model<ICounter>;
-
-    constructor(counterModel: Model<ICounter>) {
-        this.counterModel = counterModel;
-    }
-
     async getId(model: string, initialCount = 1) {
-        const prev = await this.counterModel.findOne({ model });
+        const prev = await CounterModel.findOne({ model });
 
-        const response = await this.counterModel.findOneAndUpdate(
+        const response = await CounterModel.findOneAndUpdate(
             {
                 model,
             },
@@ -34,4 +25,4 @@ class CounterRepository {
     }
 }
 
-export const counterRepository = new CounterRepository(CounterModel);
+export const counterRepository = new CounterRepository();

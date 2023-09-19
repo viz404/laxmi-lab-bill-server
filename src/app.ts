@@ -3,12 +3,10 @@ import morgan from "morgan";
 import cors from "cors";
 
 import config from "./config/config";
-import { ExpressMiddleware } from "./middlewares";
-import * as routers from "./routers";
-import { connectDatabase } from "./config";
+import { connectDatabase } from "./config/database";
+import { errorHandler } from "./middlewares";
 
 const app = express();
-const expressMiddleware = new ExpressMiddleware();
 const PORT = process.env.PORT || config.PORT;
 
 app.use(
@@ -23,9 +21,7 @@ app.get("/", (_, res) => {
     res.json({ message: "server is live" });
 });
 
-app.use("/api", routers.workRouter);
-
-app.use(expressMiddleware.errorMiddleware);
+app.use(errorHandler);
 
 (async () => {
     await connectDatabase();

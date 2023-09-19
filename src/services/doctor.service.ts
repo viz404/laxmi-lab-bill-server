@@ -1,10 +1,19 @@
-import { IDoctorRepository, IWork } from "../types/doctor.types";
+import {
+    IDoctorRepository,
+    IDoctorValidator,
+    IWork,
+} from "../types/doctor.types";
 
 export class DoctorService {
     private doctorRepository: IDoctorRepository;
+    private doctorValidator: IDoctorValidator;
 
-    constructor(doctorRepository: IDoctorRepository) {
+    constructor(
+        doctorRepository: IDoctorRepository,
+        doctorValidator: IDoctorValidator
+    ) {
         this.doctorRepository = doctorRepository;
+        this.doctorValidator = doctorValidator;
     }
 
     async createDoctor(
@@ -14,7 +23,23 @@ export class DoctorService {
         address: string | undefined,
         works: IWork[]
     ) {
-        this.validateCreateDoctor(name, phone, area, address, works);
+        const errors = this.doctorValidator.validateCreateDoctor(
+            name,
+            phone,
+            area,
+            address,
+            works
+        );
+
+        if (errors.length > 0) {
+            return {
+                status: 403,
+                data: {
+                    message: "Validation failed",
+                    errors,
+                },
+            };
+        }
 
         try {
             const newDoctor = await this.doctorRepository.createDoctor(
@@ -25,37 +50,84 @@ export class DoctorService {
                 works
             );
 
-            return newDoctor;
+            return {
+                status: 200,
+                data: {
+                    id: newDoctor.id,
+                    createdAt: newDoctor.createdAt,
+                },
+            };
         } catch (error) {
-            throw new Error("Failed to create doctor: " + error.message);
+            console.error(error);
+            return {
+                status: 500,
+                data: {
+                    message: "Failed to create doctor",
+                },
+            };
         }
     }
 
-    private validateCreateDoctor(
-        name: string,
+    async updateDoctor(
+        id: number,
+        name: string | undefined,
         phone: number | undefined,
         area: string | undefined,
         address: string | undefined,
-        works: IWork[]
+        works: IWork[] | undefined
     ) {
-        if (!name || typeof name !== "string") {
-            throw new Error("Name validation failed");
+        const errors = this.doctorValidator.validateUpdateDoctor(
+            name,
+            phone,
+            area,
+            address,
+            works
+        );
+
+        if (errors.length > 0) {
+            return {
+                status: 403,
+                data: {
+                    message: "Validation failed",
+                    errors,
+                },
+            };
         }
 
-        if (area && typeof area !== "string") {
-            throw new Error("Area validation failed");
-        }
+        try {
+            const updatedDoctor = await this.doctorRepository.updateDoctor(
+                id,
+                name,
+                phone,
+                area,
+                address,
+                works
+            );
 
-        if (phone && (typeof phone !== "number" || isNaN(phone))) {
-            throw new Error("Phone validation failed");
-        }
+            if (!updatedDoctor) {
+                return {
+                    status: 404,
+                    data: {
+                        message: "No doctor found matching the given id",
+                    },
+                };
+            }
 
-        if (address && typeof address !== "string") {
-            throw new Error("Address validation failed");
-        }
-
-        if (!Array.isArray(works) || works.length === 0) {
-            throw new Error("Works validation failed");
+            return {
+                status: 200,
+                data: {
+                    id,
+                    modifiedAt: updatedDoctor.modifiedAt,
+                },
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                status: 500,
+                data: {
+                    message: `Failed to update doctor ${id}`,
+                },
+            };
         }
     }
 }
