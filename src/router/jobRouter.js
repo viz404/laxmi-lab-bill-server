@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { jobController } from "../controller";
-import { jobMiddleware } from "../middleware";
+const { Router } = require("express");
+const { jobController } = require("../controller");
+const { jobMiddleware } = require("../middleware");
 
 const jobRouter = Router();
 
@@ -16,4 +16,4 @@ jobRouter.get(
   jobController.getJobsWithPrice
 );
 
-export default jobRouter;
+module.exports = jobRouter;

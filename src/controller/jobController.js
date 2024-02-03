@@ -1,6 +1,6 @@
-import { JobModel } from "../model";
-import { accountHelper, doctorHelper, nextCount } from "../helper";
-import calculationHelper from "../helper/calculationHelper";
+const { JobModel } = require("../model");
+const { accountHelper, doctorHelper, nextCount } = require("../helper");
+const calculationHelper = require("../helper/calculationHelper");
 
 async function addJob(req, res) {
   try {
@@ -204,7 +204,7 @@ async function getJobsWithPrice(req, res) {
   }
 }
 
-export default {
+module.exports = {
   addJob,
   getJobs,
   getJobById,

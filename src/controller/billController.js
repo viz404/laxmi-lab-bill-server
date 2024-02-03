@@ -1,10 +1,10 @@
-import {
+const {
   accountHelper,
   doctorHelper,
   nextCount,
   transactionHelper,
-} from "../helper";
-import { BillModel, JobModel } from "../model";
+} = require("../helper");
+const { BillModel, JobModel } = require("../model");
 
 async function addBillManual(req, res) {
   try {
@@ -201,7 +201,7 @@ async function deleteBill(req, res) {
   }
 }
 
-export default {
+module.exports = {
   addBillManual,
   addBill,
   getBill,

@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { doctorController } from "../controller";
-import { doctorMiddleware } from "../middleware";
+const { Router } = require("express");
+const { doctorController } = require("../controller");
+const { doctorMiddleware } = require("../middleware");
 
 const doctorRouter = Router();
 
@@ -19,4 +19,4 @@ doctorRouter.delete(
   doctorController.deleteDoctor
 );
 
-export default doctorRouter;
+module.exports = doctorRouter;

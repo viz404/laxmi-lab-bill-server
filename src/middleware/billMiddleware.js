@@ -4,7 +4,13 @@ async function verifyRequestBody(req, res, next) {
 
     let invalidData = false;
 
-    if (!amount || typeof(previous_balance) != "number" || !total_amount || !doctor || !jobs) {
+    if (
+      !amount ||
+      typeof previous_balance != "number" ||
+      !total_amount ||
+      !doctor ||
+      !jobs
+    ) {
       invalidData = true;
     }
 
@@ -20,6 +26,6 @@ async function verifyRequestBody(req, res, next) {
   }
 }
 
-export default {
+module.exports = {
   verifyRequestBody,
 };

@@ -1,5 +1,5 @@
-import { accountHelper, nextCount, transactionHelper } from "../helper";
-import { PaymentModel } from "../model";
+const { accountHelper, nextCount, transactionHelper } = require("../helper");
+const { PaymentModel } = require("../model");
 
 async function addPayment(req, res) {
   try {
@@ -67,6 +67,6 @@ async function addPayment(req, res) {
   }
 }
 
-export default {
+module.exports = {
   addPayment,
 };

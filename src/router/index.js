@@ -1,6 +1,15 @@
-export { default as workRouter } from "./workRouter";
-export { default as doctorRouter } from "./doctorRouter";
-export { default as jobRouter } from "./jobRouter";
-export { default as accountRouter } from "./accountRouter";
-export { default as billRouter } from "./billRouter";
-export {default as paymentRouter} from "./paymentRouter";
+const workRouter = require("./workRouter");
+const doctorRouter = require("./doctorRouter");
+const jobRouter = require("./jobRouter");
+const accountRouter = require("./accountRouter");
+const billRouter = require("./billRouter");
+const paymentRouter = require("./paymentRouter");
+
+module.exports = {
+  workRouter,
+  doctorRouter,
+  jobRouter,
+  accountRouter,
+  billRouter,
+  paymentRouter,
+};

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 const transactionSchema = new Schema({
   id: { type: Number, required: true },
@@ -15,4 +15,4 @@ const transactionSchema = new Schema({
 
 const TransactionModel = model("Transaction", transactionSchema);
 
-export default TransactionModel;
+module.exports = TransactionModel;

@@ -1,4 +1,4 @@
-import { CounterModel } from "../model";
+const { CounterModel } = require("../model");
 
 async function nextCount(model, initialCount = 1) {
   try {
@@ -26,4 +26,4 @@ async function nextCount(model, initialCount = 1) {
   }
 }
 
-export default nextCount;
+module.exports = nextCount;

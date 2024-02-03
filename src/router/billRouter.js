@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { billController } from "../controller";
-import { billMiddleware } from "../middleware";
+const { Router } = require("express");
+const { billController } = require("../controller");
+const { billMiddleware } = require("../middleware");
 
 const billRouter = Router();
 
@@ -10,4 +10,4 @@ billRouter.get("/:bill_id", billController.getBill);
 billRouter.get("/", billController.getBills);
 billRouter.delete("/:id", billController.deleteBill);
 
-export default billRouter;
+module.exports = billRouter;

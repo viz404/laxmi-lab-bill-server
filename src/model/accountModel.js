@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 const accountSchema = new Schema({
   id: { type: Number, required: true },
@@ -21,4 +21,4 @@ const accountSchema = new Schema({
 
 const AccountModel = model("Account", accountSchema);
 
-export default AccountModel;
+module.exports = AccountModel;

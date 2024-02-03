@@ -1,10 +1,10 @@
-import express from "express";
-import morgan from "morgan";
-import cors from "cors";
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
 
-import variables from "./config/variables";
-import * as router from "./router";
-import connectDatabase from "./config/database";
+const variables = require("./config/variables");
+const router = require("./router");
+const connectDatabase = require("./config/database");
 
 const app = express();
 const PORT = variables.PORT;

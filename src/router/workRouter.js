@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { workController } from "../controller";
-import { workMiddleware } from "../middleware";
+const { Router } = require("express");
+const { workController } = require("../controller");
+const { workMiddleware } = require("../middleware");
 
 const workRouter = Router();
 
@@ -13,4 +13,4 @@ workRouter.patch(
   workController.updateWork
 );
 
-export default workRouter;
+module.exports = workRouter;

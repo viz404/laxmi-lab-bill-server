@@ -55,7 +55,7 @@ async function verifyPriceRequest(req, res, next) {
   }
 }
 
-export default {
+module.exports = {
   verifyRequestBody,
   verifyPriceRequest,
 };

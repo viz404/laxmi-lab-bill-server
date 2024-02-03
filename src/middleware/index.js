@@ -1,4 +1,11 @@
-export { default as workMiddleware } from "./workMiddleware";
-export { default as doctorMiddleware } from "./doctorMiddleware";
-export { default as jobMiddleware } from "./jobMiddleware";
-export { default as billMiddleware } from "./billMiddleware";
+const workMiddleware = require("./workMiddleware");
+const doctorMiddleware = require("./doctorMiddleware");
+const jobMiddleware = require("./jobMiddleware");
+const billMiddleware = require("./billMiddleware");
+
+module.exports = {
+  workMiddleware,
+  doctorMiddleware,
+  jobMiddleware,
+  billMiddleware,
+};

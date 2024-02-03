@@ -1,4 +1,4 @@
-import { AccountModel } from "../model";
+const { AccountModel } = require("../model");
 
 async function getAccount(req, res) {
   try {
@@ -16,6 +16,6 @@ async function getAccount(req, res) {
   }
 }
 
-export default {
+module.exports = {
   getAccount,
 };

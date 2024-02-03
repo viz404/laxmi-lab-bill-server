@@ -1,5 +1,5 @@
-import { DoctorModel } from "../model";
-import { nextCount, accountHelper } from "../helper";
+const { DoctorModel } = require("../model");
+const { nextCount, accountHelper } = require("../helper");
 
 async function addDoctor(req, res) {
   try {
@@ -179,7 +179,7 @@ async function deleteDoctor(req, res) {
   }
 }
 
-export default {
+module.exports = {
   addDoctor,
   getDoctors,
   getDoctorById,

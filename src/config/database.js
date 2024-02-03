@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import variables from "./variables";
+const mongoose = require("mongoose");
+const variables = require("./variables");
 
 async function connectDatabase() {
   try {
@@ -9,4 +9,4 @@ async function connectDatabase() {
   }
 }
 
-export default connectDatabase;
+module.exports = connectDatabase;

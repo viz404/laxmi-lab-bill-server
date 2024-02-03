@@ -15,6 +15,6 @@ function verifyRequestBody(req, res, next) {
   }
 }
 
-export default {
+module.exports = {
   verifyRequestBody,
 };

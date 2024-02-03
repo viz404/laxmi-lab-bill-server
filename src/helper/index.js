@@ -1,4 +1,11 @@
-export { default as nextCount } from "./nextCount";
-export { default as doctorHelper } from "./doctorHelper";
-export { default as accountHelper } from "./accountHelper";
-export { default as transactionHelper } from "./transactionHelper";
+const nextCount = require("./nextCount");
+const doctorHelper = require("./doctorHelper");
+const accountHelper = require("./accountHelper");
+const transactionHelper = require("./transactionHelper");
+
+module.exports = {
+  nextCount,
+  doctorHelper,
+  accountHelper,
+  transactionHelper,
+};

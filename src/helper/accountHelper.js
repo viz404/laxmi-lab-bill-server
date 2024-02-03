@@ -1,5 +1,5 @@
-import { AccountModel, BillModel } from "../model";
-import nextCount from "./nextCount";
+const { AccountModel, BillModel } = require("../model");
+const nextCount = require("./nextCount");
 
 async function createAccount(doctor_name, doctor_id) {
   try {
@@ -119,7 +119,7 @@ async function deleteLastBill(doctor_id) {
   }
 }
 
-export default {
+module.exports = {
   deleteAccountByDoctorId,
   createAccount,
   updateBalance,

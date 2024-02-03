@@ -63,6 +63,6 @@ function updatejobWithPrice(jobs, works) {
   return total;
 }
 
-export default {
+module.exports = {
   updatejobWithPrice,
 };

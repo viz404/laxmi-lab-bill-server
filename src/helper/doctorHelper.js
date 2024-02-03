@@ -1,4 +1,4 @@
-import { DoctorModel } from "../model";
+const { DoctorModel } = require("../model");
 
 async function getDoctorDetails(id) {
   try {
@@ -9,4 +9,4 @@ async function getDoctorDetails(id) {
   }
 }
 
-export default { getDoctorDetails };
+module.exports = { getDoctorDetails };

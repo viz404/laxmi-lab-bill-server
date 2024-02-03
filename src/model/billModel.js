@@ -1,6 +1,6 @@
-import mongoose, { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-const billSchema = new Schema(
+const billSchema = new mongoose.Schema(
   {
     id: { type: Number, required: true },
     amount: { type: Number, required: true },
@@ -23,4 +23,4 @@ const billSchema = new Schema(
 );
 
 const BillModel = mongoose.model("Bill", billSchema);
-export default BillModel;
+module.exports = BillModel;

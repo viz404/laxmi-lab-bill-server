@@ -1,5 +1,5 @@
-import { TransactionModel } from "../model";
-import nextCount from "./nextCount";
+const { TransactionModel } = require("../model");
+const nextCount = require("./nextCount");
 
 async function createTransaction({
   particular,
@@ -93,7 +93,7 @@ async function deleteLastTransactionByBillId(id) {
   }
 }
 
-export default {
+module.exports = {
   createTransaction,
   deleteTransaction,
   deleteLastTransactionByBillId,

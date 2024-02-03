@@ -1,4 +1,4 @@
-import * as Model from "../model";
+const Model = require("../model");
 
 function verifyRequestBody(req, res, next) {
   try {
@@ -83,7 +83,7 @@ async function checkDoctorReferences(req, res, next) {
   }
 }
 
-export default {
+module.exports = {
   verifyRequestBody,
   checkDoctorReferences,
 };

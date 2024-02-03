@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 const workSchema = new Schema({
   id: { type: Number, required: true },
@@ -7,4 +7,4 @@ const workSchema = new Schema({
 
 const WorkModel = model("Work", workSchema);
 
-export default WorkModel;
+module.exports = WorkModel;

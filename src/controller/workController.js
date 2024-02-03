@@ -1,5 +1,5 @@
-import { nextCount } from "../helper";
-import { WorkModel } from "../model";
+const { nextCount } = require("../helper");
+const { WorkModel } = require("../model");
 
 async function addWork(req, res) {
   try {
@@ -68,7 +68,7 @@ async function updateWork(req, res) {
   }
 }
 
-export default {
+module.exports = {
   addWork,
   getWorks,
   deleteWork,

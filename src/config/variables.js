@@ -1,4 +1,6 @@
-export default {
+require("dotenv").config();
+
+module.exports = {
   PORT: 8080,
-  SERVER_URL: "mongodb://127.0.0.1:27017/lab"
+  SERVER_URL: process.env.DB_URI,
 };

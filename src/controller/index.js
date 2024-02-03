@@ -1,6 +1,15 @@
-export { default as workController } from "./workController";
-export { default as doctorController } from "./doctorController";
-export { default as jobController } from "./jobController";
-export { default as accountController } from "./accountController";
-export { default as billController } from "./billController";
-export { default as paymentController } from "./paymentController";
+const workController = require("./workController");
+const doctorController = require("./doctorController");
+const jobController = require("./jobController");
+const accountController = require("./accountController");
+const billController = require("./billController");
+const paymentController = require("./paymentController");
+
+module.exports = {
+  workController,
+  doctorController,
+  jobController,
+  accountController,
+  billController,
+  paymentController,
+};
